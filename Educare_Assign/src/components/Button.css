@@ -1,0 +1,34 @@
+.btn {
+  width: 100%;
+  height: 46px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  transition: 0.25s;
+}
+
+.primary {
+  background: #6c25ff;
+  color: white;
+}
+
+.primary:hover {
+  background: #5b1fe8;
+}
+
+.secondary {
+  background: #cebafb;
+  color: black;
+}
+
+.secondary:hover {
+  background: #c3a9f8;
+}
+
+.disabled {
+  background: #cbcbcb;
+  color: white;
+  cursor: not-allowed;
+}

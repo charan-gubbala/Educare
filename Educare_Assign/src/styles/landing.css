@@ -1,0 +1,22 @@
+.landing-page {
+  min-height: 100vh;
+}
+
+.landing-content {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 28px;
+}
+
+.bottom-content h1 {
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.bottom-content p {
+  color: #666;
+  line-height: 24px;
+  margin: 14px 0 30px;
+}
