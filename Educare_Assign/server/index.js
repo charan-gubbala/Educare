@@ -5,11 +5,35 @@ import { sendActivationEmail } from "./email.js";
 
 dotenv.config();
 
+const requiredEnv = ["SMTP_HOST", "SMTP_USER", "SMTP_PASS"];
+
+function validateEnv() {
+  const missing = requiredEnv.filter((key) => !process.env[key]?.trim());
+
+  if (missing.length > 0) {
+    console.error(`Missing required env vars: ${missing.join(", ")}`);
+  } else {
+    console.log("SMTP environment variables loaded.");
+  }
+}
+
+validateEnv();
+
 const app = express();
 const PORT = process.env.PORT || 3001;
 
 app.use(cors());
 app.use(express.json());
+
+app.get("/api/health", (_req, res) => {
+  const smtpReady = requiredEnv.every((key) => Boolean(process.env[key]?.trim()));
+
+  res.json({
+    status: "ok",
+    smtpConfigured: smtpReady,
+    frontendUrl: process.env.FRONTEND_URL || "not set",
+  });
+});
 
 app.post("/api/register", async (req, res) => {
   try {
@@ -24,6 +48,8 @@ app.post("/api/register", async (req, res) => {
     res.json({ message: "Activation email sent successfully." });
   } catch (error) {
     console.error("Failed to send activation email:", error.message);
+    if (error.code) console.error("Error code:", error.code);
+    if (error.response) console.error("SMTP response:", error.response);
     res.status(500).json({ message: "Failed to send activation email." });
   }
 });
